@@ -12,13 +12,15 @@ import { HomeComponent } from './home/home.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ContactListComponent,
-    ContactEditorComponent
+    ContactEditorComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
