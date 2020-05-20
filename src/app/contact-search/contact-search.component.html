@@ -1,0 +1,23 @@
+<div id="search-component">
+    <h4><label for="search-box">Search</label></h4>
+  
+    <input #firstName id="search-box-f" />
+    <input #lastName id="search-box-l" />
+    <input #phone id="search-box-p" />
+    <button class="back" title="search" 
+        (click)="search(firstName.value, lastName.value, phone.value)">
+        search</button>
+        
+    <button class="clear" title="clear" 
+        (click)="search(firstName.value, lastName.value, phone.value);
+        firstName.value=''; lastName.value=''; phone.value=''">
+        clear</button>
+
+    <ul class="search-result">
+      <li *ngFor="let contact of contacts" >
+        <a routerLink="/contacts/{{contact.id}}">
+          {{contact.firstName}}{{contact.lastName}}{{contact.phone}}
+        </a>
+      </li>
+    </ul>
+</div>

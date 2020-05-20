@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
+import { ContactSearchComponent } from './contact-search/contact-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
@@ -21,7 +22,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     HomeComponent,
     ContactListComponent,
     ContactEditorComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ContactSearchComponent
   ],
   imports: [
     BrowserModule,
