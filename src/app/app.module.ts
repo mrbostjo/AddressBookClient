@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ContactEditorComponent } from './contact-editor/contact-editor.componen
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers:  [{ provide: ErrorHandler, useClass: ErrorManagerService }, ],
   bootstrap: [AppComponent]
