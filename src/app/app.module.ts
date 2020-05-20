@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
+
+import { ErrorManagerService } from './error-manager.service';
+import { ContactManagerService } from './contact-manager.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +19,7 @@ import { ContactListComponent } from './contact-list/contact-list.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers:  [{ provide: ErrorHandler, useClass: ErrorManagerService }, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
