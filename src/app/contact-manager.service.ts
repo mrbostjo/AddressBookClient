@@ -21,7 +21,7 @@ export class ContactManagerService {
   public contactUpdated = new Subject();
 
   constructor(
-    private errorManager: ErrorManagerService, 
+    private errorManager: ErrorManagerService,
     private http: HttpClient
   ) { }
 

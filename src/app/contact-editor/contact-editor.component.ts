@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 
 import { Contact } from '../contact';
 import { ContactManagerService } from '../contact-manager.service';
+import { ConfirmDialogService } from '../confirm-dialog.service';
+import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-editor',
@@ -17,7 +19,8 @@ export class ContactEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private contactManager: ContactManagerService
+    private contactManagerService: ContactManagerService,
+    private confirmDialogService: ConfirmDialogService
   ) {}
 
   ngOnInit(): void {
@@ -31,15 +34,25 @@ export class ContactEditorComponent implements OnInit {
     if (this.isEdit)
       {
         const id = +idTest;
-        this.contactManager.getContact(id)
+        this.contactManagerService.getContact(id)
           .subscribe(contact => this.contact = contact);
       }
   }
 
   update(): void {
-    this.contactManager.updateContact(this.contact)
+    this.contactManagerService.updateContact(this.contact)
       .subscribe();
   }
+
+addContact(firstName: string, lastName: string, phone: string)
+{
+  console.log('test clicked!');
+  this.confirmDialogService.confirmThis('Are you sure to add?',
+    () => this.add(firstName, lastName, phone),
+    function () {
+    alert('No clicked');
+  })
+}
 
   add(firstName: string, lastName: string, phone: string): void {
     const newContact = new Contact();
@@ -47,7 +60,7 @@ export class ContactEditorComponent implements OnInit {
     newContact.lastName = lastName;
     newContact.phone = phone;
 
-    this.contactManager.addContact(newContact)
+    this.contactManagerService.addContact(newContact)
       .subscribe( contact => this.contact = newContact);
   }
 

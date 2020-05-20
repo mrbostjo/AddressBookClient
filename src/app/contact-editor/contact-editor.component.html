@@ -35,9 +35,11 @@
     <input #firstName />
     <input #lastName />
     <input #phone />
-    <button class="add" title="add contact"
+    <button class="save" title="save new contact"
         (click)="add(firstName.value, lastName.value, phone.value);
         firstName.value=''; lastName.value=''; phone.value=''">
-        add</button>
+        save</button>
+    <button (click)="addContact(firstName.value, lastName.value, phone.value)">test</button>
 </ng-template>
+<app-confirm-dialog></app-confirm-dialog>
 

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ErrorManagerService } from './error-manager.service';
 import { ContactManagerService } from './contact-manager.service';
+import { ConfirmDialogService } from './confirm-dialog.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +30,13 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     AppRoutingModule,
     NgbModule
   ],
-  providers:  [{ provide: ErrorHandler, useClass: ErrorManagerService }, ],
+  exports: [
+    ConfirmDialogComponent
+],
+  providers:  [
+    { provide: ErrorHandler, useClass: ErrorManagerService },
+    ConfirmDialogService
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
