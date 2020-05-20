@@ -1,1 +1,26 @@
-<p>contact-list works!</p>
+<ul class="title">
+    <li>
+        <span>id</span>
+        <span class="firstName">FirstName</span>
+        <span class="lastName">LastName</span>
+        <span class="phone">Phone</span>
+        <span>
+            <button class="addBtn" title="add contact" [routerLink]="'/contacts/add'">add</button>
+        </span>
+    </li>
+</ul>
+
+<ul class="contactList">
+    <li *ngFor="let contact of (contacts); index as i">
+        <span class="id">{{i}}</span>
+        <a routerLink="/contacts/{{contact.id}}">
+            <span class="firstName">{{contact.firstName}}</span>
+            <span class="lastName">{{contact.lastName}}</span>
+            <span class="phone">{{contact.phone}}</span>
+        </a>
+        <span>
+            <button class="deleteBtn" title="delete contact"
+            (click)="delete(contact)">x</button>
+        </span>
+    </li>
+</ul>
