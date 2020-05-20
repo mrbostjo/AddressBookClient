@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactEditorComponent } from './contact-editor/contact-editor.component';
+import { ContactSearchComponent } from './contact-search/contact-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ContactListComponent,
-    ContactEditorComponent
+    ContactEditorComponent,
+    ContactSearchComponent
   ],
   imports: [
     BrowserModule,
