@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { ErrorManagerService } from './error-manager.service';
@@ -17,6 +18,7 @@ import { ContactListComponent } from './contact-list/contact-list.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers:  [{ provide: ErrorHandler, useClass: ErrorManagerService }, ],
