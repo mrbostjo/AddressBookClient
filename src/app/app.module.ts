@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { ErrorManagerService } from './error-manager.service';
 import { ContactManagerService } from './contact-manager.service';
@@ -21,6 +22,7 @@ import { ContactEditorComponent } from './contact-editor/contact-editor.componen
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers:  [{ provide: ErrorHandler, useClass: ErrorManagerService }, ],

@@ -1,1 +1,43 @@
-<p>contact-editor works!</p>
+<!--<div>
+    <span class="id">id: {{contact.id}} </span>
+    <span class="firstName">First name: {{contact.FirstName}} </span>
+    <span class="lastName">Last name: {{contact.LastName}} </span>
+    <span class="phone">Phone: {{contact.Phone}} </span>
+    <button class="back" title="navigate back" (click)="goBack()">Back</button>
+    <button class="save" title="save contact" (click)="save()">Save</button>
+</div>-->
+<div *ngIf="isEdit; then enableEdit else enableAdd"></div>
+<ng-template #enableEdit>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Phone</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody *ngIf="contact">
+        <tr>
+        <td class="id">{{contact.id}} </td>
+        <td class="firstName"><input [(ngModel)]="contact.firstName"></td>
+        <td class="lastName"><input [(ngModel)]="contact.lastName"></td>
+        <td class="phone"><input [(ngModel)]="contact.phone"></td>
+        <td><button class="back" title="navigate back" (click)="goBack()">Back</button></td>
+        <td><button class="save" title="save contact" (click)="update()">Save</button></td>
+        </tr>
+    </tbody>
+</table>
+</ng-template>
+<ng-template #enableAdd>
+    <input #firstName />
+    <input #lastName />
+    <input #phone />
+    <button class="add" title="add contact"
+        (click)="add(firstName.value, lastName.value, phone.value);
+        firstName.value=''; lastName.value=''; phone.value=''">
+        add</button>
+</ng-template>
+
