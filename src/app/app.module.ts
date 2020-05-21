@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ErrorManagerService } from './error-manager.service';
 import { ContactManagerService } from './contact-manager.service';
 import { ConfirmDialogService } from './confirm-dialog.service';
+import { ModalDialogService } from './modal-dialog.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { ContactEditorComponent } from './contact-editor/contact-editor.componen
 import { ContactSearchComponent } from './contact-search/contact-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ContactListComponent,
     ContactEditorComponent,
     ConfirmDialogComponent,
-    ContactSearchComponent
+    ContactSearchComponent,
+    AlertDialogComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     NgbModule
   ],
@@ -37,7 +41,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 ],
   providers:  [
     { provide: ErrorHandler, useClass: ErrorManagerService },
-    ConfirmDialogService
+    ModalDialogService
    ],
   bootstrap: [AppComponent]
 })
