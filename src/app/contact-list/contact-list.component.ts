@@ -37,6 +37,7 @@ export class ContactListComponent implements OnInit {
       'Are you sure to delete?', `${contact.firstName} ${contact.lastName}`,
     () => this.deleteContact(contact), null );
   }
+  
   deleteContact(contact: Contact): void {
     console.log(`Delete contact id ${contact.id} requested.`);
     this.contactManagerService.deleteContactAsync(contact);
