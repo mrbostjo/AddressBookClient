@@ -29,10 +29,6 @@ export class ContactEditorComponent implements OnInit {
     this.getContact();
   }
 
-  // isInputValid(firstName: string, lastName: string, phone: string ): boolean {
-  //   return ((firstName !== '') && (lastName !== '') && (phone !== ''));
-  // }
-
   getContact(): void {
     const idTest = this.route.snapshot.paramMap.get('id');
     this.isEdit = (idTest != null) && (!Number.isNaN(+idTest));
@@ -41,7 +37,13 @@ export class ContactEditorComponent implements OnInit {
       {
         const id = +idTest;
         this.contactManagerService.getContact(id)
-          .subscribe(contact => this.contact = contact);
+          .subscribe(
+            response => {
+              this.contact = response;
+            },
+            err => {
+              this.modalDialogService.alertThis('Cannot get contact!', err, null);
+            });
       }
       else
       {
@@ -52,6 +54,7 @@ export class ContactEditorComponent implements OnInit {
   update(): void {
     this.contactManagerService.updateContact(this.contact)
       .subscribe(response => {
+        this.modalDialogService.alertThis('Contact updated!', this.contact.firstName, null);
         console.log(`Updating contact: ${this.contact.firstName}`);
       },
       err => {
