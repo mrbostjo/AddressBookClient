@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ErrorManagerService } from './error-manager.service';
 import { ContactManagerService } from './contact-manager.service';
-import { ConfirmDialogService } from './confirm-dialog.service';
 import { ModalDialogService } from './modal-dialog.service';
 
 import { AppRoutingModule } from './app-routing.module';

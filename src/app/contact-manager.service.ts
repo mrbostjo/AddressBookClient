@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, Subject, of, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError, map, tap, last } from 'rxjs/operators';
 
 import { Contact } from './contact';
@@ -9,12 +9,18 @@ import { ErrorManagerService } from './error-manager.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ContactManagerService {
 
   private url = 'http://localhost:51026/api/contacts';
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
+
+  
+
   contacts: Contact[];
 
   public contactList = new Subject<Contact[]>();
@@ -59,16 +65,28 @@ export class ContactManagerService {
 
   addContact(contact: Contact): Observable<any> {
     return this.http.post(this.url, contact, this.httpOptions).pipe(
-      tap(_ => this.getContactsAsync()),
-      catchError(this.errorManager.handleErrorNice<any>('postContact'))
+      //tap(_ => this.getContactsAsync()),
+      //catchError(this.errorManager.handleErrorNice<any>('postContact'))
+      //catchError((err) => {
+        //return throwError(err);
+        catchError(this.errorManager.handleErrorHttpResponse)
+      //})
     );
   }
+
+
+  // updateContact(contact: Contact): Observable<any> {
+  //   const url = `${this.url}/${contact.id}`;
+  //   return this.http.put(url, contact, this.httpOptions).pipe(
+  //     tap(_ => this.getContactsAsync()),
+  //     catchError(this.errorManager.handleErrorNice<any>('updateContact'))
+  //   );
+  // }
 
   updateContact(contact: Contact): Observable<any> {
     const url = `${this.url}/${contact.id}`;
     return this.http.put(url, contact, this.httpOptions).pipe(
-      tap(_ => this.getContactsAsync()),
-      catchError(this.errorManager.handleErrorNice<any>('updateContact'))
+      catchError(this.errorManager.handleErrorHttpResponse)
     );
   }
 
@@ -138,4 +156,9 @@ export class ContactManagerService {
       return promise;
   }
 
+}
+
+export interface Config {
+  url: string;
+  textfile: string;
 }
