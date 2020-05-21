@@ -19,12 +19,9 @@ export class ContactManagerService {
   };
 
 
-  
-
   contacts: Contact[];
 
   public contactList = new Subject<Contact[]>();
-  public contactUpdated = new Subject();
 
   constructor(
     private errorManager: ErrorManagerService,
@@ -114,7 +111,7 @@ export class ContactManagerService {
 
     return this.http.delete<Contact>(url, this.httpOptions).pipe(
       tap(_ => this.getContactsAsync()),
-      catchError(this.errorManager.handleErrorNice<Contact>('deleteContact'))
+      catchError(this.errorManager.handleErrorHttpResponse)
     );
   }
 
@@ -131,7 +128,7 @@ export class ContactManagerService {
 
     console.log(params.toString());
     return this.http.get<Contact[]>(`${searchUrl}`, {params}).pipe(
-      catchError(this.errorManager.handleErrorNice<Contact[]>('searchContacts', []))
+      catchError(this.errorManager.handleErrorHttpResponse)
     );
   }
 
@@ -151,7 +148,7 @@ export class ContactManagerService {
       promise.then((data) =>
         this.contactList.next(data)
       ).catch	((error) => {
-        catchError(this.errorManager.handleErrorNice<Contact>('searchContacts'));
+        catchError(this.errorManager.handleErrorHttpResponse);
       });
       return promise;
   }

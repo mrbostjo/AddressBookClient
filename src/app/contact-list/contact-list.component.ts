@@ -19,26 +19,25 @@ export class ContactListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getContacts();
     this.contactManagerService.contactList.asObservable().subscribe( contacts => this.contacts = contacts);
+    this.getContacts();
   }
 
   getContacts(): void {
-    this.contactManagerService.getContacts()
-      .subscribe(contacts => this.contacts = contacts);
+    this.contactManagerService.getContactsAsync();
   }
 
-  select(contact: Contact): void {
+  selectContact(contact: Contact): void {
     this.selectedContact = contact;
   }
 
-  deleteContact(contact: Contact)
+  confirmDelete(contact: Contact)
   {
     this.modalDialogService.confirmThis(
       'Are you sure to delete?', `${contact.firstName} ${contact.lastName}`,
-    () => this.delete(contact), null );
+    () => this.deleteContact(contact), null );
   }
-  delete(contact: Contact): void {
+  deleteContact(contact: Contact): void {
     console.log(`Delete contact id ${contact.id} requested.`);
     this.contactManagerService.deleteContactAsync(contact);
   }
