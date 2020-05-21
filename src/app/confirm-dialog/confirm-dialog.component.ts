@@ -6,6 +6,7 @@ import { ModalDialogService } from '../modal-dialog.service';
     templateUrl: 'confirm-dialog.component.html',
     styleUrls: ['confirm-dialog.component.css']
 })
+// A component t render modal confirmation dialog with yes and no actions.
 export class ConfirmDialogComponent {
     message: any;
 
