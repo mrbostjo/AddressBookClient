@@ -24,7 +24,9 @@ export class ContactListComponent implements OnInit {
   }
 
   getContacts(): void {
-    this.contactManagerService.getContactsAsync();
+    this.contactManagerService.getContactsAsync().catch(err => {
+      this.modalDialogService.alertThis('Cannot get contacts!', 'list', null);
+    });
   }
 
   selectContact(contact: Contact): void {
