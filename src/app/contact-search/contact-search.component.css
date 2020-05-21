@@ -1,0 +1,11 @@
+#search-component {
+    left: 3em;
+}
+
+#search-box-last, #search-box-phone {
+    margin-left: 0.5em;
+}
+
+#search-box-name, #search-box-last, #search-box-phone {
+    width: 100px;
+}

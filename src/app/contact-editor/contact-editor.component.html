@@ -1,45 +1,30 @@
-<!--<div>
-    <span class="id">id: {{contact.id}} </span>
-    <span class="firstName">First name: {{contact.FirstName}} </span>
-    <span class="lastName">Last name: {{contact.LastName}} </span>
-    <span class="phone">Phone: {{contact.Phone}} </span>
-    <button class="back" title="navigate back" (click)="goBack()">Back</button>
-    <button class="save" title="save contact" (click)="save()">Save</button>
-</div>-->
-<div *ngIf="isEdit; then enableEdit else enableAdd"></div>
-<ng-template #enableEdit>
-<table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Phone</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody *ngIf="contact">
-        <tr>
-        <td class="id">{{contact.id}} </td>
-        <td class="firstName"><input [(ngModel)]="contact.firstName"></td>
-        <td class="lastName"><input [(ngModel)]="contact.lastName"></td>
-        <td class="phone"><input [(ngModel)]="contact.phone"></td>
-        <td><button class="back" title="navigate back" (click)="goBack()">Back</button></td>
-        <td><button class="save" title="save contact" (click)="update()">Save</button></td>
-        </tr>
-    </tbody>
-</table>
-</ng-template>
-<ng-template #enableAdd>
-    <input #firstName />
-    <input #lastName />
-    <input #phone />
-    <button class="save" title="save new contact"
-        (click)="add(firstName.value, lastName.value, phone.value);
-        firstName.value=''; lastName.value=''; phone.value=''">
-        save</button>
-    <button (click)="addContact(firstName.value, lastName.value, phone.value)">test</button>
-</ng-template>
+<h4>
+    <span [hidden]="isEdit" class="label label-default">Add new contact</span>
+    <span [hidden]="!isEdit" class="label label-default">Edit contact</span>
+</h4>
+<div *ngIf="contact">
+<form #contactForm="ngForm" id="addForm" class="form-inline" >
+    <div class="form-group">
+        <label for="firstName">Name</label>
+        <input class="form-control" id="firstName" type="text" [(ngModel)]="contact.firstName" name="firstName" required #firstName="ngModel" placeholder="First name"/>
+        <div [hidden]="firstName.valid" class="alert alert-danger">required!</div>
+        <label for="lastName">Last name</label>
+        <input class="form-control" id="lastName" type="text" [(ngModel)]="contact.lastName" name="lastName" required #lastName="ngModel" placeholder="Last name"/>
+        <div [hidden]="lastName.valid" class="alert alert-danger">required!</div>
+        <label for="phone">Phone number</label>
+        <input class="form-control" id="phone" type="text" [(ngModel)]="contact.phone" required name="phone" #phone="ngModel" placeholder="phone number"/>
+        <div [hidden]="phone.valid" class="alert alert-danger">required!</div>
+        <button class="btn btn-default glyphicon glyphicon-floppy-disk" id="add" title="add new contact"
+            [hidden]="isEdit"
+            [disabled]="!firstName.valid && !lastName.valid && !phone.valid"
+            (click)="add(firstName.value, lastName.value, phone.value);">
+        </button>
+        <button class="btn btn-default glyphicon glyphicon-floppy-disk" id="save" title="save contact"
+            [hidden]="!isEdit"
+            (click)="update()"></button>
+        <button class="btn btn-default glyphicon glyphicon-arrow-left" id="back" title="navigate back" (click)="goBack()"></button>
+    </div>
+</form>
+</div>
 <app-confirm-dialog></app-confirm-dialog>
-
+<app-alert-dialog></app-alert-dialog>

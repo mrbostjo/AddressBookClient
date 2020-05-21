@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Contact } from '../contact';
 import { ContactManagerService } from '../contact-manager.service';
-import { ConfirmDialogService } from '../confirm-dialog.service';
-import { last } from 'rxjs/operators';
+import { ModalDialogService } from '../modal-dialog.service';
 
 @Component({
   selector: 'app-contact-editor',
@@ -16,16 +16,22 @@ export class ContactEditorComponent implements OnInit {
   @Input() contact: Contact;
 
   isEdit: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private contactManagerService: ContactManagerService,
-    private confirmDialogService: ConfirmDialogService
+    private modalDialogService: ModalDialogService,
+    
   ) {}
 
   ngOnInit(): void {
     this.getContact();
   }
+
+  // isInputValid(firstName: string, lastName: string, phone: string ): boolean {
+  //   return ((firstName !== '') && (lastName !== '') && (phone !== ''));
+  // }
 
   getContact(): void {
     const idTest = this.route.snapshot.paramMap.get('id');
@@ -37,22 +43,22 @@ export class ContactEditorComponent implements OnInit {
         this.contactManagerService.getContact(id)
           .subscribe(contact => this.contact = contact);
       }
+      else
+      {
+        this.contact = new Contact();
+      }
   }
 
   update(): void {
     this.contactManagerService.updateContact(this.contact)
-      .subscribe();
+      .subscribe(response => {
+        console.log(`Updating contact: ${this.contact.firstName}`);
+      },
+      err => {
+        console.log(`Oops while adding contact: ${err}`);
+        this.modalDialogService.alertThis('Cannot edit contact!', err, null);
+      });
   }
-
-addContact(firstName: string, lastName: string, phone: string)
-{
-  console.log('test clicked!');
-  this.confirmDialogService.confirmThis('Are you sure to add?',
-    () => this.add(firstName, lastName, phone),
-    function () {
-    alert('No clicked');
-  })
-}
 
   add(firstName: string, lastName: string, phone: string): void {
     const newContact = new Contact();
@@ -61,7 +67,15 @@ addContact(firstName: string, lastName: string, phone: string)
     newContact.phone = phone;
 
     this.contactManagerService.addContact(newContact)
-      .subscribe( contact => this.contact = newContact);
+      .subscribe(
+      response => {
+        this.contact = newContact;
+        console.log(`added contact: ${newContact.firstName}`);
+      },
+      err => {
+        console.log(`oops while adding contact: ${err}`);
+        this.modalDialogService.alertThis('Cannot add contact!', err, null);
+      });
   }
 
   goBack(): void {

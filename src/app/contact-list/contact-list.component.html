@@ -1,27 +1,26 @@
-<ul class="title">
-    <li>
-        <span>id</span>
-        <span class="firstName">FirstName</span>
-        <span class="lastName">LastName</span>
-        <span class="phone">Phone</span>
-        <span>
-            <button class="addBtn" title="add contact" [routerLink]="'/contacts/add'">add</button>
-        </span>
-    </li>
-</ul>
-
-<ul class="contactList">
-    <li *ngFor="let contact of (contacts); index as i">
-        <span class="id">{{i}}</span>
-        <a routerLink="/contacts/{{contact.id}}">
-            <span class="firstName">{{contact.firstName}}</span>
-            <span class="lastName">{{contact.lastName}}</span>
-            <span class="phone">{{contact.phone}}</span>
-        </a>
-        <span>
-            <button class="deleteBtn" title="delete contact"
-            (click)="deleteContact(contact)">x</button>
-        </span>
-    </li>
-</ul>
+<div class="container col-md-18" id="container">
+<span class="table">
+<table class="table-striped table-hover table-condensed">
+<thead><tr>
+    <th>Name</th><th>Last name</th><th>Phone number</th><th></th>
+    <th><button class="btn btn-default glyphicon glyphicon-plus" id="add" title="add contact" [routerLink]="'/contacts/add'"></button></th>
+</tr>
+</thead>
+<tbody>
+    <tr id="row" *ngFor="let contact of (contacts); index as i">
+        <td id="firstName">{{contact.firstName}}</td>
+        <td id="lastName">{{contact.lastName}}</td>
+        <td id="phone">{{contact.phone}}</td>
+        <td>
+            <button routerLink="/contacts/{{contact.id}}" class="btn btn-default glyphicon glyphicon-pencil" id="edit" title="edit contact"></button>
+        </td>
+        <td>
+            <button class="btn btn-default glyphicon glyphicon-trash" id="delete" title="remove contact"
+            (click)="deleteContact(contact)"></button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</span>
+</div>
 <app-confirm-dialog></app-confirm-dialog>

@@ -1,17 +1,17 @@
 <div id="search-component">
-    <h4><label for="search-box">Search</label></h4>
+    <div id="spacer"></div>
   
-    <input #firstName id="search-box-f" />
-    <input #lastName id="search-box-l" />
-    <input #phone id="search-box-p" />
-    <button class="back" title="search" 
+    <input #firstName id="search-box-name"  placeholder="Name"/>
+    <input #lastName id="search-box-last" placeholder="Last name"/>
+    <input #phone id="search-box-phone" placeholder="phone number"/>
+    <button class="btn btn-default glyphicon glyphicon-search" id="search" title="search" 
         (click)="search(firstName.value, lastName.value, phone.value)">
-        search</button>
+    </button>
         
-    <button class="clear" title="clear" 
+    <button class="btn btn-default glyphicon glyphicon-remove" id="clear" title="clear search" 
         (click)="search(firstName.value, lastName.value, phone.value);
         firstName.value=''; lastName.value=''; phone.value=''">
-        clear</button>
+    </button>
 
     <ul class="search-result">
       <li *ngFor="let contact of contacts" >

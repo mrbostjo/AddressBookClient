@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact';
 import { ContactManagerService } from '../contact-manager.service';
-import { ConfirmDialogService } from '../confirm-dialog.service';
+import { ModalDialogService } from '../modal-dialog.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -15,7 +15,7 @@ export class ContactListComponent implements OnInit {
 
   constructor(
     private contactManagerService: ContactManagerService,
-    private confirmDialogService: ConfirmDialogService
+    private modalDialogService: ModalDialogService,
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +24,6 @@ export class ContactListComponent implements OnInit {
   }
 
   getContacts(): void {
-    console.log('Requesting data');
     this.contactManagerService.getContacts()
       .subscribe(contacts => this.contacts = contacts);
   }
@@ -35,17 +34,14 @@ export class ContactListComponent implements OnInit {
 
   deleteContact(contact: Contact)
   {
-    console.log('Delete clicked!');
-    this.confirmDialogService.confirmThis(
-      `Are you sure to delete?\n ${contact.firstName} ${contact.lastName}`,
-    () => this.delete(contact),
-     function () {
-     //alert('No clicked');
-    })
+    this.modalDialogService.confirmThis(
+      'Are you sure to delete?', `${contact.firstName} ${contact.lastName}`,
+    () => this.delete(contact), null );
   }
   delete(contact: Contact): void {
     console.log(`Delete contact id ${contact.id} requested.`);
     this.contactManagerService.deleteContactAsync(contact);
   }
+
 
 }
