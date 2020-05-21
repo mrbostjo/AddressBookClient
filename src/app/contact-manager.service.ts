@@ -28,6 +28,7 @@ export class ContactManagerService {
     private http: HttpClient
   ) { }
 
+  // Function for getting contact list through observable
   getContacts(): Observable<Contact[]> {
     console.log('Getting contacs ');
     return this.http.get<Contact[]>(this.url)
@@ -36,6 +37,7 @@ export class ContactManagerService {
     );
   }
 
+  // Function for getting observable thorough promise
   async getContactsAsync(): Promise<Contact[]> {
     console.log('Getting contacs ');
     const promise = this.http.get<Contact[]>(this.url).toPromise();
@@ -48,7 +50,9 @@ export class ContactManagerService {
   getContact(id: number): Observable<Contact> {
     console.log(`Getting contact id=${id}`);
     const url = `${this.url}/${id}`;
-    return this.http.get<Contact>(url);
+    return this.http.get<Contact>(url).pipe(
+      catchError(this.errorManager.handleErrorHttpResponse)
+    );
   }
 
   getContactyy(id: number): Observable<Contact> {
@@ -62,23 +66,9 @@ export class ContactManagerService {
 
   addContact(contact: Contact): Observable<any> {
     return this.http.post(this.url, contact, this.httpOptions).pipe(
-      //tap(_ => this.getContactsAsync()),
-      //catchError(this.errorManager.handleErrorNice<any>('postContact'))
-      //catchError((err) => {
-        //return throwError(err);
         catchError(this.errorManager.handleErrorHttpResponse)
-      //})
     );
   }
-
-
-  // updateContact(contact: Contact): Observable<any> {
-  //   const url = `${this.url}/${contact.id}`;
-  //   return this.http.put(url, contact, this.httpOptions).pipe(
-  //     tap(_ => this.getContactsAsync()),
-  //     catchError(this.errorManager.handleErrorNice<any>('updateContact'))
-  //   );
-  // }
 
   updateContact(contact: Contact): Observable<any> {
     const url = `${this.url}/${contact.id}`;
@@ -116,10 +106,7 @@ export class ContactManagerService {
   }
 
   searchContacts(firstName: string, lastName: string, phone: string): Observable<Contact[]> {
-    // if (!firstName.trim()) {
-    //   // if not search term, return empty hero array.
-    //   return of([]);
-    // }
+
     const searchUrl = `${this.url}/search`;
     const params = new  HttpParams()
       .set('firstName', firstName)
@@ -133,10 +120,7 @@ export class ContactManagerService {
   }
 
   searchContactsAsync(firstName: string, lastName: string, phone: string): Promise<Contact[]> {
-      // if (!firstName.trim()) {
-      //   // if not search term, return empty hero array.
-      //   return of([]);
-      // }
+
       const searchUrl = `${this.url}/search`;
       const params = new  HttpParams()
         .set('firstName', firstName)
@@ -153,9 +137,4 @@ export class ContactManagerService {
       return promise;
   }
 
-}
-
-export interface Config {
-  url: string;
-  textfile: string;
 }
