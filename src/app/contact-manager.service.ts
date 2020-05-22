@@ -12,8 +12,7 @@ import { ErrorManagerService } from './error-manager.service';
 
 export class ContactManagerService {
 
-  // private url = 'http://localhost:51026/api/contacts';
-  private url = 'http://localhost:5000/api/contacts';
+    private url = 'http://localhost:5000/api/contacts';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,28 +22,42 @@ export class ContactManagerService {
   contacts: Contact[];
 
   public contactList = new Subject<Contact[]>();
+  public DEFAULT_PAGE_SIZE = 6;
+  public currentPage = 1;
+  public pageSize = this.DEFAULT_PAGE_SIZE;
+  public totalContactCount = new Subject<number>();
+
 
   constructor(
     private errorManager: ErrorManagerService,
     private http: HttpClient
   ) { }
 
-  // Function for getting contact list through observable
-  getContacts(): Observable<Contact[]> {
-    console.log('Getting contacs ');
-    return this.http.get<Contact[]>(this.url)
-    .pipe(
-      catchError(this.errorManager.handleErrorNice<Contact[]>('getContacs', []))
+  getContactCount(): Promise<number>
+  {
+    const url = `${this.url}/count`;
+    console.log('Getting contact count ');
+    const promise = this.http.get<number>(url).toPromise();
+    promise.then(
+      count => this.totalContactCount.next(count)
     );
+    return promise;
   }
 
-  // Function for getting observable thorough promise
-  async getContactsAsync(): Promise<Contact[]> {
-    console.log('Getting contacs ');
-    const promise = this.http.get<Contact[]>(this.url).toPromise();
-    promise.then((data) => {
-      this.contactList.next(data);
-    });
+  getSearchContactCount(contact: Contact): Promise<number>
+  {
+    const searchUrl = `${this.url}/searchCount`;
+    const params = new  HttpParams()
+      .set('firstName', (contact.firstName) ? contact.firstName : '' )
+      .set('lastName', (contact.lastName) ? contact.lastName : '')
+      .set('address', (contact.address) ? contact.address : '')
+      .set('phone', (contact.phone) ? contact.phone : '');
+
+    console.log('Getting searched contact count ');
+    const promise = this.http.get<number>(searchUrl, {params}).toPromise();
+    promise.then(
+      count => this.totalContactCount.next(count)
+    );
     return promise;
   }
 
@@ -53,15 +66,6 @@ export class ContactManagerService {
     const url = `${this.url}/${id}`;
     return this.http.get<Contact>(url).pipe(
       catchError(this.errorManager.handleErrorHttpResponse)
-    );
-  }
-
-  getContactyy(id: number): Observable<Contact> {
-    console.log(`Getting contact id=${id}`);
-    const url = `${this.url}/${id}`;
-    return this.http.get<Contact>(url)
-    .pipe(
-      catchError(this.errorManager.handleErrorNice<Contact>(`getContact id=${id}`))
     );
   }
 
@@ -78,13 +82,30 @@ export class ContactManagerService {
     );
   }
 
+  async getContactsAsync(): Promise<Contact[]> {
+    return this.getContactsPagedAsync(this.currentPage, this.pageSize);
+  }
+  // Function for getting observable thorough promise
+  async getContactsPagedAsync(selectedPage: number, pageSize: number): Promise<Contact[]> {
+    console.log('Getting contacs ');
+    const params = new  HttpParams()
+      .set('page', selectedPage.toString())
+      .set('pageSize', pageSize.toString());
+
+    const promise = this.http.get<Contact[]>(this.url, {params}).toPromise();
+    promise.then((data) => {
+      this.contactList.next(data);
+    });
+    return promise;
+  }
+
   async deleteContactAsync(contact: Contact | number): Promise<Contact> {
     const id = typeof contact === 'number' ? contact : contact.id;
     const url = `${this.url}/${id}`;
     let result: Contact;
     const promise = this.http.delete<Contact>(url, this.httpOptions).toPromise<Contact>();
     promise.then((data) => {
-        this.getContactsAsync();
+        this.getContactsPagedAsync(this.currentPage, this.pageSize);
         result = data; }
     ).catch	((error) => {
       catchError(this.errorManager.handleErrorNice<Contact>('deleteContact'));
@@ -96,48 +117,25 @@ export class ContactManagerService {
     }
   }
 
-  deleteContact(contact: Contact | number): Observable<Contact> {
-    const id = typeof contact === 'number' ? contact : contact.id;
-    const url = `${this.url}/${id}`;
-
-    return this.http.delete<Contact>(url, this.httpOptions).pipe(
-      tap(_ => this.getContactsAsync()),
-      catchError(this.errorManager.handleErrorHttpResponse)
-    );
-  }
-
-  searchContacts(firstName: string, lastName: string, address: string, phone: string): Observable<Contact[]> {
+  searchContactsAsync(contact: Contact, page: number): Promise<Contact[]> {
 
     const searchUrl = `${this.url}/search`;
     const params = new  HttpParams()
-      .set('firstName', firstName)
-      .set('lastName', lastName)
-      .set('address', address)
-      .set('phone', phone);
+      .set('firstName', (contact.firstName) ? contact.firstName : '' )
+      .set('lastName', (contact.lastName) ? contact.lastName : '')
+      .set('address', (contact.address) ? contact.address : '')
+      .set('phone', (contact.phone) ? contact.phone : '')
+      .set('page', page.toString())
+      .set('pageSize', this.pageSize.toString());
 
     console.log(params.toString());
-    return this.http.get<Contact[]>(`${searchUrl}`, {params}).pipe(
-      catchError(this.errorManager.handleErrorHttpResponse)
-    );
-  }
-
-  searchContactsAsync(firstName: string, lastName: string, address: string, phone: string): Promise<Contact[]> {
-
-      const searchUrl = `${this.url}/search`;
-      const params = new  HttpParams()
-        .set('firstName', firstName)
-        .set('lastName', lastName)
-        .set('address', address)
-        .set('phone', phone);
-
-      console.log(params.toString());
-      const promise = this.http.get<Contact[]>(`${searchUrl}`, {params}).toPromise();
-      promise.then((data) =>
-        this.contactList.next(data)
-      ).catch	((error) => {
-        catchError(this.errorManager.handleErrorHttpResponse);
-      });
-      return promise;
-  }
+    const promise = this.http.get<Contact[]>(`${searchUrl}`, {params}).toPromise();
+    promise.then((data) =>
+      this.contactList.next(data)
+    ).catch	((error) => {
+      catchError(this.errorManager.handleErrorHttpResponse);
+    });
+    return promise;
+}
 
 }

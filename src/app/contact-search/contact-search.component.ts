@@ -1,10 +1,10 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Component, OnInit, Input } from '@angular/core';
+import { Subject } from 'rxjs';
 
 
 import { Contact } from '../contact';
 import { ContactManagerService } from '../contact-manager.service';
+import { ContactSearchService } from '../contact-search.service';
 
 @Component({
   selector: 'app-contact-search',
@@ -12,29 +12,37 @@ import { ContactManagerService } from '../contact-manager.service';
   styleUrls: ['./contact-search.component.css']
 })
 export class ContactSearchComponent implements OnInit {
-  @Output() contacts: Contact[];
+  @Input() contact: Contact;
   
-  private searchFirstNames = new Subject<string>();
-  private searchLastNames = new Subject<string>();
+  private searchChanged = new Subject<string>();
+  
 
-  constructor(private contactManagerService: ContactManagerService) { }
+  constructor(
+    private contactManagerService: ContactManagerService,
+    private contactSearchService: ContactSearchService
+    ) { }
 
   ngOnInit(): void {
+    this.contact = new Contact();
   }
 
-  // Push a search term into the observable stream.
-  searchFNames(firstName: string): void {
-    this.searchFirstNames.next(firstName);
-  }
-  searchLNames(lastName: string): void {
-    this.searchLastNames.next(lastName);
+  public isSearchActive(): boolean {
+    return this.contactSearchService.isContactSearchActive();
   }
 
-  search(firstName: string, lastName: string, address: string, phone: string): void
+  search(): void
   {
-    this.contactManagerService.searchContactsAsync(firstName, lastName, address, phone);
+    this.contactSearchService.contact = this.contact;
+    this.contactManagerService.getSearchContactCount(this.contact);
+    this.contactManagerService.searchContactsAsync(this.contact, 1);
   }
 
-  
-
+  clear()
+  {
+    this.contact.firstName = '';
+    this.contact.lastName = '';
+    this.contact.address = '';
+    this.contact.phone = '';
+    this.search();
+  }
 }

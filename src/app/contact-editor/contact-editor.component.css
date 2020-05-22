@@ -2,6 +2,20 @@
     width: fit-content;
 }
 
+#firstName.invalid {
+    border: 2px;
+    border-color: brown;
+}
+
 #searchContent {
     margin-bottom: 100px;
+    margin-left: 100px;
+}
+
+#back {
+    margin-left: 120px;
+}
+
+#alert {
+    font-weight: 700;
 }

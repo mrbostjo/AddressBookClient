@@ -23,6 +23,10 @@
             (click)="confirmDelete(contact)"></button>
         </td>
     </tr>
+    <tr>
+        <th><button class="page-item btn btn-default glyphicon glyphicon-arrow-left" (click)="getPreviousPage()" [hidden]="!showPreviousPage()" ></button></th>
+        <th></th><th></th><th></th><th></th>
+        <th><button class="page-item btn btn-default glyphicon glyphicon-arrow-right" (click)="getNextPage()" [hidden]="!showNextPage()"></button></th></tr>
 </tbody>
 </table>
 </div>

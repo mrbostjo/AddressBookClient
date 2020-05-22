@@ -1,23 +1,30 @@
-<div id="search-component">
-    <div id="spacer"></div>
-  
-    <input #firstName id="search-box-name"  placeholder="Name"/>
-    <input #lastName id="search-box-last" placeholder="Last name"/>
-    <input #address id="search-box-addr" placeholder="Address"/>
-    <input #phone id="search-box-phone" placeholder="phone number"/>
-    <button class="btn btn-default glyphicon glyphicon-search" id="search" title="search" 
-        (click)="search(firstName.value, lastName.value, address.value, phone.value)">
-    </button>
-        
-    <button class="btn btn-default glyphicon glyphicon-remove" id="clear" title="clear search" 
-        (click)="firstName.value=''; lastName.value=''; address.value=''; phone.value=''">
-    </button>
-
-    <ul class="search-result">
-      <li *ngFor="let contact of contacts" >
-        <a routerLink="/contacts/{{contact.id}}">
-          {{contact.firstName}}{{contact.lastName}}{{contact.phone}}
-        </a>
-      </li>
-    </ul>
+<div class="container">
+<table class="table-hover table-condensed">
+  <tbody>
+    <tr>
+      <td>
+        <input [(ngModel)]="contact.firstName" id="search-box-name" placeholder="Name"/>
+      </td>
+      <td>
+        <input [(ngModel)]="contact.lastName" id="search-box-last" placeholder="Last name"/>
+      </td>
+      <td>
+        <input [(ngModel)]="contact.address" id="search-box-addr" placeholder="Address"/>
+      </td>
+      <td>
+        <input [(ngModel)]="contact.phone" id="search-box-phone" placeholder="Phone number"/>
+      </td>
+      <td>
+          <button class="btn btn-default glyphicon glyphicon-search" id="search" title="search" 
+              (click)="search()">
+          </button>
+      </td>
+      <td>
+        <button class="btn btn-default glyphicon glyphicon-remove" id="clear" title="clear search" 
+            (click)="clear(); ">
+        </button>
+      </td>
+  </tr>
+  </tbody>
+</table>
 </div>
