@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ErrorInterceptorSerice } from './error-interceptor.service';
 import { ErrorManagerService } from './error-manager.service';
 import { ContactManagerService } from './contact-manager.service';
 import { ModalDialogService } from './modal-dialog.service';
@@ -15,7 +16,6 @@ import { ContactEditorComponent } from './contact-editor/contact-editor.componen
 import { ContactSearchComponent } from './contact-search/contact-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,6 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
     ContactEditorComponent,
     ConfirmDialogComponent,
     ContactSearchComponent,
-    AlertDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +38,8 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
     ConfirmDialogComponent
 ],
   providers:  [
-    { provide: ErrorHandler, useClass: ErrorManagerService },
+    //{ provide: ErrorHandler, useClass: ErrorManagerService },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorSerice, multi: true },
     ModalDialogService
    ],
   bootstrap: [AppComponent]
