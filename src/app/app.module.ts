@@ -38,7 +38,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ConfirmDialogComponent
 ],
   providers:  [
-    //{ provide: ErrorHandler, useClass: ErrorManagerService },
+    //{ provide: ErrorHandler, useClass: ErrorManagerService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorSerice, multi: true },
     ModalDialogService
    ],
