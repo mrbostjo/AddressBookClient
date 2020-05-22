@@ -3,14 +3,14 @@
   
     <input #firstName id="search-box-name"  placeholder="Name"/>
     <input #lastName id="search-box-last" placeholder="Last name"/>
+    <input #address id="search-box-addr" placeholder="Address"/>
     <input #phone id="search-box-phone" placeholder="phone number"/>
     <button class="btn btn-default glyphicon glyphicon-search" id="search" title="search" 
-        (click)="search(firstName.value, lastName.value, phone.value)">
+        (click)="search(firstName.value, lastName.value, address.value, phone.value)">
     </button>
         
     <button class="btn btn-default glyphicon glyphicon-remove" id="clear" title="clear search" 
-        (click)="search(firstName.value, lastName.value, phone.value);
-        firstName.value=''; lastName.value=''; phone.value=''">
+        (click)="firstName.value=''; lastName.value=''; address.value=''; phone.value=''">
     </button>
 
     <ul class="search-result">

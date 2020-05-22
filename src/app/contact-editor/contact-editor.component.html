@@ -8,16 +8,22 @@
         <label for="firstName">Name</label>
         <input class="form-control" id="firstName" type="text" [(ngModel)]="contact.firstName" name="firstName" required #firstName="ngModel" placeholder="First name"/>
         <div [hidden]="firstName.valid" class="alert alert-danger">required!</div>
+
         <label for="lastName">Last name</label>
         <input class="form-control" id="lastName" type="text" [(ngModel)]="contact.lastName" name="lastName" required #lastName="ngModel" placeholder="Last name"/>
         <div [hidden]="lastName.valid" class="alert alert-danger">required!</div>
+
+        <label for="address">Address</label>
+        <input class="form-control" id="address" type="text" [(ngModel)]="contact.address" name="address" #address="ngModel" placeholder="Address"/>
+
         <label for="phone">Phone number</label>
-        <input class="form-control" id="phone" type="text" [(ngModel)]="contact.phone" required name="phone" #phone="ngModel" placeholder="phone number"/>
+        <input class="form-control" id="phone" type="text" [(ngModel)]="contact.phone"  name="phone" required #phone="ngModel" placeholder="Phone number"/>
         <div [hidden]="phone.valid" class="alert alert-danger">required!</div>
+
         <button class="btn btn-default glyphicon glyphicon-floppy-disk" id="add" title="add new contact"
             [hidden]="isEdit"
             [disabled]="!firstName.valid && !lastName.valid && !phone.valid"
-            (click)="add(firstName.value, lastName.value, phone.value);">
+            (click)="add(firstName.value, lastName.value, address.value, phone.value);">
         </button>
         <button class="btn btn-default glyphicon glyphicon-floppy-disk" id="save" title="save contact"
             [hidden]="!isEdit"

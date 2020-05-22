@@ -12,7 +12,8 @@ import { ErrorManagerService } from './error-manager.service';
 
 export class ContactManagerService {
 
-  private url = 'http://localhost:51026/api/contacts';
+  // private url = 'http://localhost:51026/api/contacts';
+  private url = 'http://localhost:5000/api/contacts';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -105,12 +106,13 @@ export class ContactManagerService {
     );
   }
 
-  searchContacts(firstName: string, lastName: string, phone: string): Observable<Contact[]> {
+  searchContacts(firstName: string, lastName: string, address: string, phone: string): Observable<Contact[]> {
 
     const searchUrl = `${this.url}/search`;
     const params = new  HttpParams()
       .set('firstName', firstName)
       .set('lastName', lastName)
+      .set('address', address)
       .set('phone', phone);
 
     console.log(params.toString());
@@ -119,12 +121,13 @@ export class ContactManagerService {
     );
   }
 
-  searchContactsAsync(firstName: string, lastName: string, phone: string): Promise<Contact[]> {
+  searchContactsAsync(firstName: string, lastName: string, address: string, phone: string): Promise<Contact[]> {
 
       const searchUrl = `${this.url}/search`;
       const params = new  HttpParams()
         .set('firstName', firstName)
         .set('lastName', lastName)
+        .set('address', address)
         .set('phone', phone);
 
       console.log(params.toString());

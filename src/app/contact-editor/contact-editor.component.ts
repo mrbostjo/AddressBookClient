@@ -63,10 +63,11 @@ export class ContactEditorComponent implements OnInit {
       });
   }
 
-  add(firstName: string, lastName: string, phone: string): void {
+  add(firstName: string, lastName: string, address: string, phone: string): void {
     const newContact = new Contact();
     newContact.firstName = firstName;
     newContact.lastName = lastName;
+    newContact.address = address;
     newContact.phone = phone;
 
     this.contactManagerService.addContact(newContact)

@@ -30,9 +30,9 @@ export class ContactSearchComponent implements OnInit {
     this.searchLastNames.next(lastName);
   }
 
-  search(firstName: string, lastName: string, phone: string): void
+  search(firstName: string, lastName: string, address: string, phone: string): void
   {
-    this.contactManagerService.searchContactsAsync(firstName, lastName, phone);
+    this.contactManagerService.searchContactsAsync(firstName, lastName, address, phone);
   }
 
   
