@@ -3,10 +3,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ErrorInterceptorSerice } from './error-interceptor.service';
-import { ErrorManagerService } from './error-manager.service';
-import { ContactManagerService } from './contact-manager.service';
-import { ModalDialogService } from './modal-dialog.service';
+import { ErrorInterceptorSerice } from './services/error-interceptor.service';
+import { ModalDialogService } from './services/modal-dialog.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

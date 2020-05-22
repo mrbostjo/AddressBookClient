@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact';
-import { ContactManagerService } from '../contact-manager.service';
-import { ModalDialogService } from '../modal-dialog.service';
-import { ContactSearchService } from '../contact-search.service';
+import { ContactManagerService } from '../services/contact-manager.service';
+import { ModalDialogService } from '../services/modal-dialog.service';
+import { ContactSearchService } from '../services/contact-search.service';
 
 @Component({
   selector: 'app-contact-list',

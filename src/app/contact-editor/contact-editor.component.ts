@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Contact } from '../contact';
-import { ContactManagerService } from '../contact-manager.service';
-import { ModalDialogService } from '../modal-dialog.service';
+import { ContactManagerService } from '../services/contact-manager.service';
+import { ModalDialogService } from '../services/modal-dialog.service';
 
 @Component({
   selector: 'app-contact-editor',

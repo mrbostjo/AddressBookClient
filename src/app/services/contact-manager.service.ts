@@ -3,8 +3,7 @@ import { Observable, Subject, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError, map, tap, last } from 'rxjs/operators';
 
-import { Contact } from './contact';
-import { ContactSearchComponent } from './contact-search/contact-search.component';
+import { Contact } from '../contact';
 import { ErrorManagerService } from './error-manager.service';
 
 @Injectable({
