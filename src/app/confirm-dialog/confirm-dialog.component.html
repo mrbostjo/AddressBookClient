@@ -25,7 +25,28 @@
                         </p>  
                     </div>  
                 </div>  
+            </div>
+            <div *ngIf="message?.type == 'alert'" class="modal-body">  
+                <div class="row">  
+                    <div class="col-md-12">  
+                        <p class="text-center confirm-title">{{message.head}}</p>  
+                    </div>  
+                </div>
+                <div class="row">  
+                    <div class="col-md-12">  
+                        <p class="text-center confirm-title">{{message.text}}</p>  
+                    </div>  
+                </div>
+                <div class="row">  
+                    <div class="col-md-12">  
+                        <p class="confirm-button">  
+                            <a (click)="message.yesFn()">  
+                                <button class="btn btn-yes">Ok</button>  
+                            </a>
+                        </p>  
+                    </div>  
+                </div>  
             </div>  
         </div>  
     </div>  
-</div>  
+</div>
