@@ -11,15 +11,15 @@ export class ModalDialogService {
     constructor() { }
 
     confirmThis(title: string, message: string, yesFn: () => void, noFn: () => void) {
-        this.setConfirmation(title, message, yesFn, noFn);
+        this.setConfirmation('confirm', title, message, yesFn, noFn);
     }
     alertThis(title: string, message: string, yesFn: () => void) {
-        this.setConfirmation(title, message, yesFn, null);
+        this.setConfirmation('alert', title, message, yesFn, null);
     }
-    setConfirmation(title: string, message: string, yesFn: () => void, noFn: () => void) {
+    setConfirmation(dialogType: string, title: string, message: string, yesFn: () => void, noFn: () => void) {
         const that = this;
         this.subject.next({
-            type: 'confirm',
+            type: dialogType,
             head : title,
             text: message,
             yesFn: function () {
