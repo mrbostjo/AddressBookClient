@@ -3,8 +3,8 @@ import { Subject } from 'rxjs';
 
 
 import { Contact } from '../contact';
-import { ContactManagerService } from '../contact-manager.service';
-import { ContactSearchService } from '../contact-search.service';
+import { ContactManagerService } from '../services/contact-manager.service';
+import { ContactSearchService } from '../services/contact-search.service';
 
 @Component({
   selector: 'app-contact-search',

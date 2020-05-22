@@ -22,7 +22,7 @@ export class ContactEditorComponent implements OnInit {
     private location: Location,
     private contactManagerService: ContactManagerService,
     private modalDialogService: ModalDialogService,
-    
+
   ) {}
 
   ngOnInit(): void {
@@ -55,10 +55,8 @@ export class ContactEditorComponent implements OnInit {
     this.contactManagerService.updateContact(this.contact)
       .subscribe(response => {
         this.modalDialogService.alertThis('Contact updated!', this.contact.firstName, null);
-        console.log(`Updating contact: ${this.contact.firstName}`);
       },
       err => {
-        console.log(`Oops while adding contact: ${err}`);
         this.modalDialogService.alertThis('Cannot edit contact!', err, null);
       });
   }
@@ -74,10 +72,9 @@ export class ContactEditorComponent implements OnInit {
       .subscribe(
       response => {
         this.contact = newContact;
-        console.log(`added contact: ${newContact.firstName}`);
+        this.modalDialogService.alertThis('Added contact!', `${newContact.firstName}`, null);
       },
       err => {
-        console.log(`oops while adding contact: ${err}`);
         this.modalDialogService.alertThis('Cannot add contact!', err, null);
       });
   }

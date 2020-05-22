@@ -32,7 +32,6 @@ export class ContactListComponent implements OnInit {
 
   getTotalPages(): number {
     const count = (Math.ceil(this.totalContacts / this.contactManagerService.pageSize));
-    console.log(`total pages: ${count}`);
     return count;
   }
 
@@ -63,9 +62,6 @@ export class ContactListComponent implements OnInit {
   }
 
   getContacts(): void {
-    console.log("getting all contacts.")
-    //this.contactManagerService.getContactCount().subscribe( totalContacts => this.totalContacts = totalContacts );
-    console.log(`issearch? ${this.contactSearchService.isContactSearchActive()}`)
     if (this.contactSearchService.isContactSearchActive())
     {
       this.contactManagerService.getSearchContactCount(this.contactSearchService.contact);
@@ -82,7 +78,6 @@ export class ContactListComponent implements OnInit {
           .catch(err => {
           this.modalDialogService.alertThis('Cannot get contacts!', '', null);
       });
-      console.log("getting all contacts.")
     }
   }
 
